@@ -222,10 +222,11 @@ update_config(#aws_config{access_key_id = KeyId} = Config)
     %% In order to support caching of the aws_config, we could store the expiration_time
     %% and check it here. If it is about to expire (within 5 minutes is what boto uses)
     %% then we should get the new config.
+    io:format("no update needed to Config: ~p~n", [Config]),
     {ok, Config};
 update_config(#aws_config{} = Config) ->
     %% AccessKey is not set. Try to read from role metadata.
-    io:format("AWS Config: ~p~n", [Config]),
+    io:format("no accesskey in Config: ~p~n", [Config]),
     case get_metadata_credentials(Config) of
         {error, Reason} ->
             {error, Reason};

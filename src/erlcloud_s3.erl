@@ -148,29 +148,29 @@ create_bucket(BucketName) ->
 
 create_bucket(BucketName, Config)
   when is_record(Config, aws_config) ->
-    io:format("2 inputs with config"),
+    io:format("2 inputs with config~n"),
     create_bucket(BucketName, private, Config);
 
 create_bucket(BucketName, ACL) ->
-  io:format("2 inputs with ACL"),
+  io:format("2 inputs with ACL~n"),
     create_bucket(BucketName, ACL, none).
 
 -spec create_bucket(string(), s3_bucket_acl(), s3_location_constraint() | aws_config()) -> ok.
 
 create_bucket(BucketName, ACL, Config)
   when is_record(Config, aws_config) ->
-    io:format("3 inputs with ACL and Config"),
+    io:format("3 inputs with ACL and Config~n"),
     create_bucket(BucketName, ACL, none, Config);
 
 create_bucket(BucketName, ACL, LocationConstraint) ->
-  io:format("3 inputs with ACL and LocationConstraint"),
+  io:format("3 inputs with ACL and LocationConstraint~n"),
     create_bucket(BucketName, ACL, LocationConstraint, default_config()).
 
 -spec create_bucket(string(), s3_bucket_acl(), s3_location_constraint(), aws_config()) -> ok.
 
 create_bucket(BucketName, ACL, LocationConstraint, Config)
   when is_list(BucketName), is_atom(ACL), is_atom(LocationConstraint) ->
-    io:format("4 inputs with ACL, LocationConstraint and COnfig"),
+    io:format("4 inputs with ACL, LocationConstraint and COnfig~n"),
     Headers = case ACL of
                   private -> [];  %% private is the default
                   _       -> [{"x-amz-acl", encode_acl(ACL)}]
@@ -1110,6 +1110,7 @@ s3_request2_no_update(Config, Method, Host, Path, Subresource, Params, Body, Hea
                                 end
                                ]),
 
+    io:format("Ready to make the request...~n")
     Request = #aws_request{service = s3, uri = RequestURI, method = Method},
     Request2 = case Method of
                    M when M =:= get orelse M =:= head orelse M =:= delete ->
