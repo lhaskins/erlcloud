@@ -181,7 +181,7 @@ create_bucket(BucketName, ACL, LocationConstraint, Config)
     io:format("POSTData: ~p~n", [POSTData]),
     io:format("Config: ~p~n", [Config]),
     io:format("BucketName: ~p~n", [BucketName]),
-    io:format("~p~n", Headers),
+    io:format("Headers: ~p~n", [Headers]),
     s3_simple_request(Config, put, BucketName, "/", "", [], POSTData, Headers).
 
 encode_acl(undefined)                 -> undefined;
