@@ -178,6 +178,10 @@ create_bucket(BucketName, ACL, LocationConstraint, Config)
                               [{'LocationConstraint', [LocationName]}]},
                        list_to_binary(xmerl:export_simple([XML], xmerl_xml))
                end,
+    io:format("POSTData: ~p~n", [POSTData]),
+    io:format("Config: ~p~n", [Config]),
+    io:format("BucketName: ~p~n", [BucketName]),
+    io:format("~p~n", Headers),
     s3_simple_request(Config, put, BucketName, "/", "", [], POSTData, Headers).
 
 encode_acl(undefined)                 -> undefined;
@@ -1014,7 +1018,6 @@ s3_simple_request(Config, Method, Host, Path, Subresource, Params, POSTData, Hea
                 _ ->
                     ok
             end
-        error -> error;
     end.
 
 s3_xml_request(Config, Method, Host, Path, Subresource, Params, POSTData, Headers) ->
@@ -1040,14 +1043,6 @@ s3_request(Config, Method, Host, Path, Subreasource, Params, POSTData, Headers) 
 %% s3_request2 returns {ok, Body} or {error, Reason} instead of throwing as s3_request does
 %% This is the preferred pattern for new APIs
 s3_request2(Config, Method, Host, Path, Subresource, Params, POSTData, Headers) ->
-    :io.format(Config)
-    :io.format(Method)
-    :io.format(Host)
-    :io.format(Path)
-    :io.format(Subresource)
-    :io.format(Params)
-    :io.format(POSTData)
-    :io.format(Headers)
     case erlcloud_aws:update_config(Config) of
         {ok, Config1} ->
             s3_request2_no_update(Config1, Method, Host, Path, Subresource, Params, POSTData, Headers);

@@ -225,7 +225,7 @@ update_config(#aws_config{access_key_id = KeyId} = Config)
     {ok, Config};
 update_config(#aws_config{} = Config) ->
     %% AccessKey is not set. Try to read from role metadata.
-    :io.format(Config)
+    io:format("AWS Config: ~p~n", [Config]),
     case get_metadata_credentials(Config) of
         {error, Reason} ->
             {error, Reason};
