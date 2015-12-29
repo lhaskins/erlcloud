@@ -148,24 +148,29 @@ create_bucket(BucketName) ->
 
 create_bucket(BucketName, Config)
   when is_record(Config, aws_config) ->
+    io:format("2 inputs with config"),
     create_bucket(BucketName, private, Config);
 
 create_bucket(BucketName, ACL) ->
+  io:format("2 inputs with ACL"),
     create_bucket(BucketName, ACL, none).
 
 -spec create_bucket(string(), s3_bucket_acl(), s3_location_constraint() | aws_config()) -> ok.
 
 create_bucket(BucketName, ACL, Config)
   when is_record(Config, aws_config) ->
+    io:format("3 inputs with ACL and Config"),
     create_bucket(BucketName, ACL, none, Config);
 
 create_bucket(BucketName, ACL, LocationConstraint) ->
+  io:format("3 inputs with ACL and LocationConstraint"),
     create_bucket(BucketName, ACL, LocationConstraint, default_config()).
 
 -spec create_bucket(string(), s3_bucket_acl(), s3_location_constraint(), aws_config()) -> ok.
 
 create_bucket(BucketName, ACL, LocationConstraint, Config)
   when is_list(BucketName), is_atom(ACL), is_atom(LocationConstraint) ->
+    io:format("4 inputs with ACL, LocationConstraint and COnfig"),
     Headers = case ACL of
                   private -> [];  %% private is the default
                   _       -> [{"x-amz-acl", encode_acl(ACL)}]
